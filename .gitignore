@@ -1,12 +1,270 @@
-*.class
+/**
+ * @(#)PremiumCalculatorAlexAustinConnor.java
+ *
+ *
+ * @author Alex Egyed, Austin B, Connor Richey
+ * @version 1.00 2015/2/11
+ */
+import javax.swing.*;			//for gui
+import java.awt.*;				//for gui
+import java.awt.color.*;		//for color
+import java.awt.event.*;		//for events
+import java.io.*;			
+import java.util.*;			
+import java.text.*;			
+import javax.swing.border.*;
+import java.security.*;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+public class PremiumCalculatorAlexAustinConnor extends JFrame implements ActionListener
+{
+	
+	
+	//declaration of objects, not instanciated yet
+	
+	//screen1
+	JRadioButton healthButton;
+	JRadioButton autoButton;
+	ButtonGroup groupInsuranceType;
+	
+	JRadioButton oldButton;
+	JRadioButton youngButton;
+	ButtonGroup groupAge;
+	
+	JRadioButton smokeNoButton;
+	JRadioButton smokeYesButton;
+	ButtonGroup groupSmoke;
+	
+	JRadioButton ticketsLowButton;
+	JRadioButton ticketsHighButton;
+	ButtonGroup groupTickets;
+	
+	JButton jbCalculate;
+	JLabel jWelcome;
+	
+	//screen 2
+	JLabel premiumLabel;
+	JLabel premAmtLabel;
+	
+	JButton exitButton;
+	
+	//objects
+	PremiumCalculatorAlexAustinConnor sheba;
+	//PremiumCalculatorAlexAustinConnor screen2;
+	
+    public PremiumCalculatorAlexAustinConnor() //constructor
+    {
+    	/***********************************************/
+    	 /****************SCREEN ONE****************/
+    	 /****************************************/
+    	int jFrameWidth = 500; 	
+    	int jFrameHeight = 300;	
+    	
+    	setSize(jFrameWidth, jFrameHeight);
+    	
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
+    /***********WELCOME*************/	
+    //not gonna register jbWelcome with actionlistener because it doesn't do anything
+    jWelcome = new JLabel("Welcome to the Premium Calculator. Please select whatever applies to you.");
+    
+    /***********INSURANCE TYPE*****************************/
+    //Create the radio buttons.
+    healthButton = new JRadioButton("Health");
+    healthButton.setActionCommand("Health");
 
-# Package Files #
-*.jar
-*.war
-*.ear
+    autoButton = new JRadioButton("Auto");
+    autoButton.setActionCommand("Auto");
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+    //Group the radio buttons.
+    groupInsuranceType = new ButtonGroup();
+    groupInsuranceType.add(healthButton);
+    groupInsuranceType.add(autoButton);
+
+    //Register a listener for the radio buttons.
+    healthButton.addActionListener(this);
+    autoButton.addActionListener(this);
+	
+	/******************AGE*********************************/
+	//Create the radio buttons.
+    oldButton = new JRadioButton("Over 50");
+    oldButton.setActionCommand("Over 50");
+    
+    youngButton = new JRadioButton("50 or under");
+    youngButton.setActionCommand("50 or under");
+
+    //Group the radio buttons.
+    groupAge = new ButtonGroup();
+    groupAge.add(oldButton);
+    groupAge.add(youngButton);
+ 	
+    //Register a listener for the radio buttons.
+    oldButton.addActionListener(this);
+    youngButton.addActionListener(this);
+    
+    /*******************SMOKER********************************/
+    //Create the radio buttons.
+    smokeNoButton = new JRadioButton("No, I don't smoke.");
+    smokeNoButton.setActionCommand("No, I don't smoke.");
+
+    smokeYesButton = new JRadioButton("Yes, I do smoke.");
+    smokeYesButton.setActionCommand("Yes, I do smoke.");
+
+    //Group the radio buttons.
+    groupSmoke = new ButtonGroup();
+    groupSmoke.add(smokeNoButton);
+    groupSmoke.add(smokeYesButton);
+ 	
+    //Register a listener for the radio buttons.
+    smokeNoButton.addActionListener(this);
+    smokeYesButton.addActionListener(this);
+    
+    /***************TICKETS**********************************/
+    //Create the radio buttons.
+    ticketsLowButton = new JRadioButton("0 or 1 ticket");
+    ticketsLowButton.setActionCommand("0 or 1 ticket");
+
+    ticketsHighButton = new JRadioButton("2 or more tickets.");
+    ticketsHighButton.setActionCommand("2 or more tickets.");
+
+    //Group the radio buttons.
+    groupTickets = new ButtonGroup();
+    groupTickets.add(ticketsHighButton);
+    groupTickets.add(ticketsLowButton);
+ 	
+    //Register a listener for the radio buttons.
+    ticketsLowButton.addActionListener(this);
+    ticketsHighButton.addActionListener(this);
+    
+    /**********CALCULATE***********/
+    
+    //create button
+    jbCalculate = new JButton("Calculate Your Premium");
+    //register with actionlistener
+    jbCalculate.addActionListener(this);
+    	
+
+    /*********CONTAINER***************************************/
+    
+    //create container
+    Container content = getContentPane();
+    content.setLayout(new FlowLayout(FlowLayout.CENTER));
+    content.setBackground(Color.getHSBColor(0.56f, 0.08f, 0.8f));
+    	
+    //add buttons to Container to make them show up	
+    content.add(jWelcome);
+    content.add(healthButton);
+    content.add(autoButton);
+	content.add(oldButton);
+    content.add(youngButton);
+    content.add(smokeNoButton);
+    content.add(smokeYesButton);
+    content.add(ticketsLowButton);
+    content.add(ticketsHighButton);
+    content.add(jbCalculate);
+	
+    	
+    }//end constructor
+    
+    
+    public PremiumCalculatorAlexAustinConnor(double premiumAmount) //screen 2 constructor
+    {
+    /****************************************/
+	/********************Screen 2************/
+	/****************************************/
+
+	int jFrameWidth = 300; 	
+    int jFrameHeight = 400;	
+    
+    setSize(jFrameWidth, jFrameHeight);
+    	
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	//declarations
+	JLabel premiumLabel = new JLabel("Your Premium:");
+	JLabel premAmtLabel = new JLabel("$" + premiumAmount);//premium amount label
+	JButton exitButton = new JButton("Exit");
+	
+	//create container
+	Container content = getContentPane();
+    content.setLayout(new FlowLayout(FlowLayout.CENTER));
+    content.setBackground(Color.getHSBColor(0.56f, 0.08f, 0.8f));
+	
+	content.add(premiumLabel);
+	content.add(premAmtLabel);
+	content.add(exitButton);
+	
+	exitButton.addActionListener(this);
+	
+//	screen2.setSize(100, 100);	//	premiumLabel.setText("Your premium");//	premiumLabel.setPosition(5, 30);	//	premAmtLabel.setPosition(20, 50);	//	exitButton.setText("Exit");//	exitButton.setPosition(60, 80);//	exitButton.registerListener(exitRoutine());	//	screen2.add(premiumLabel);//	screen2.add(premAmtLabel);//	screen2.add(exitButton);
+    
+    }//end second constructor
+    
+    
+    public static void main(String args[])
+    {
+    	PremiumCalculatorAlexAustinConnor sheba = new PremiumCalculatorAlexAustinConnor();
+    	sheba.setVisible(true);
+    //	screen2 = new PremiumCalculatorAlexAustinConnor(computePremium());
+    }//end main
+    
+    
+    
+    public void actionPerformed(ActionEvent ae)
+    {
+    	Object source = ae.getSource(); //tells you which button was pressed
+    	
+    	if(source==jbCalculate)
+    	{
+    		
+    	//	sheba.setVisible(false);
+    		
+    		PremiumCalculatorAlexAustinConnor screen2 = new PremiumCalculatorAlexAustinConnor(computePremium());
+    		
+    		screen2.setVisible(true); //make screen 2 show up
+    	}
+    }
+    
+    public double computePremium() 
+    {//declarations
+    	int HEALTH_AMT = 500;
+    	int HIGH_AGE = 100;
+    	int SMOKER = 250;
+    	int AUTO_AMT = 750;
+    	int HIGH_TICKETS = 400;
+    	int HIGH_AGE_DRIVER_DISCOUNT = 200;
+    	double premiumAmount;
+    	
+    	if(healthButton.isSelected())
+    		{
+    			premiumAmount = HEALTH_AMT;
+    		
+    		if(oldButton.isSelected())
+    			{
+    				premiumAmount = premiumAmount + HIGH_AGE;
+    			}
+    		if(smokeYesButton.isSelected())
+    			{
+    				premiumAmount = premiumAmount + SMOKER;
+    			}
+    		}
+    	else
+    		{
+    			premiumAmount = AUTO_AMT;
+    		
+    		if(ticketsHighButton.isSelected())
+    			{
+    			premiumAmount = premiumAmount + HIGH_TICKETS;
+    			}
+    		if(oldButton.isSelected())
+    			{
+    			premiumAmount = premiumAmount - HIGH_AGE_DRIVER_DISCOUNT;
+    			}
+    		}
+    	
+    	//premAmtLabel.setText(premiumAmount);
+    	sheba.setVisible(false);
+    //	screen2.setVisible(true);
+    	return premiumAmount;
+    }	
+    
+}//end class
